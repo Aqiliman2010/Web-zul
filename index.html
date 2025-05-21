@@ -24,8 +24,8 @@
             background-size: 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            -webkit-text-stroke: 1px white; /* Garis putih mengelilingi teks */
-            text-shadow: 0 0 4px rgba(255, 255, 255, 0.5); /* Tambahan kesan lembut */
+            -webkit-text-stroke: 1px white;
+            text-shadow: 0 0 4px rgba(255, 255, 255, 0.5);
             animation: gradientMove 3s linear infinite;
             text-align: center;
         }
@@ -68,10 +68,14 @@
             border-color: #00C4FF;
             box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
         }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
         button {
             padding: 0.8rem 1.5rem;
-            background: linear-gradient(90deg, #007BFF, #00C4FF);
-            color: white;
             border: none;
             border-radius: 8px;
             cursor: pointer;
@@ -79,9 +83,20 @@
             font-weight: 600;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
+        #kiraBtn {
+            background: linear-gradient(90deg, #007BFF, #00C4FF);
+            color: white;
+        }
+        #padamBtn {
+            background: linear-gradient(90deg, #ff6b6b, #ff8c8c);
+            color: white;
+        }
         button:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4);
+        }
+        #padamBtn:hover {
+            box-shadow: 0 4px 10px rgba(255, 107, 107, 0.4);
         }
         #keputusan {
             margin-top: 1.5rem;
@@ -99,7 +114,7 @@
             h1 {
                 font-size: 2.5rem;
                 margin: 1rem 0;
-                -webkit-text-stroke: 0.8px white; /* Kurangkan stroke untuk skrin kecil */
+                -webkit-text-stroke: 0.8px white;
             }
             .container {
                 padding: 1.5rem;
@@ -112,6 +127,10 @@
                 width: 85%;
                 font-size: 0.9rem;
                 height: 120px;
+            }
+            .button-container {
+                flex-direction: column;
+                gap: 0.5rem;
             }
             button {
                 font-size: 0.9rem;
@@ -128,7 +147,10 @@
     <div class="container">
         <h2>Pengira Bilangan Perkataan</h2>
         <textarea id="inputTeks" placeholder="Taip teks anda di sini..."></textarea>
-        <button onclick="kiraPerkataan()">Kira Bilangan Perkataan</button>
+        <div class="button-container">
+            <button id="kiraBtn" onclick="kiraPerkataan()">Kira Bilangan Perkataan</button>
+            <button id="padamBtn" onclick="padamTeks()">Padam</button>
+        </div>
         <div id="keputusan">Jumlah perkataan: 0</div>
     </div>
 
@@ -227,6 +249,12 @@
             console.log('Senarai perkataan akhir:', senaraiPerkataan); // Log untuk debug
             const bilanganPerkataan = senaraiPerkataan.length;
             document.getElementById('keputusan').textContent = `Jumlah perkataan: ${bilanganPerkataan}`;
+        }
+
+        function padamTeks() {
+            document.getElementById('inputTeks').value = '';
+            document.getElementById('keputusan').textContent = `Jumlah perkataan: 0`;
+            console.log('Teks dipadam, keputusan: 0');
         }
     </script>
 </body>
