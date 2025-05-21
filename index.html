@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pengira Patah Perkataan</title>
+    <title>Pengira Bilangan Perkataan</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -45,7 +45,7 @@
         button:hover {
             background-color: #45a049;
         }
-        #result {
+        #keputusan {
             margin-top: 15px;
             font-size: 18px;
             color: #333;
@@ -54,18 +54,66 @@
 </head>
 <body>
     <div class="container">
-        <h2>Pengira Patah Perkataan</h2>
-        <textarea id="textInput" placeholder="Masukkan teks di sini..."></textarea>
-        <button onclick="countWords()">Kira Perkataan</button>
-        <div id="result">Bilangan perkataan: 0</div>
+        <h2>Pengira Bilangan Perkataan</h2>
+        <textarea id="inputTeks" placeholder="Taip teks anda di sini..."></textarea>
+        <button onclick="kiraPerkataan()">Kira Bilangan Perkataan</button>
+        <div id="keputusan">Jumlah perkataan: 0</div>
     </div>
 
     <script>
-        function countWords() {
-            const text = document.getElementById('textInput').value;
-            const words = text.trim().split(/\s+/).filter(word => word.length > 0);
-            const wordCount = words.length;
-            document.getElementById('result').textContent = `Bilangan perkataan: ${wordCount}`;
+        function kiraPerkataan() {
+            const teks = document.getElementById('inputTeks').value;
+            if (!teks.trim()) {
+                document.getElementById('keputusan').textContent = `Jumlah perkataan: 0`;
+                return;
+            }
+
+            // Senarai perkataan gabungan dan kata ganda (contoh terhad)
+            const perkataanGabungan = [
+                'orang ramai', 'kereta api', 'kamera video', 'bunga api', 'mata hari',
+                'kuala lumpur', 'pulau pinang', 'dewan bahasa', 'taman bunga'
+            ];
+            const kataGanda = [
+                'bunga-bunga', 'lalu-lalang', 'sayur-sayuran', 'kupu-kupu', 'rama-rama'
+            ];
+
+            // Pisahkan teks kepada perkataan
+            let perkataan = teks.trim().split(/\s+/).filter(kata => kata.length > 0);
+
+            // Fungsi untuk semak sama ada frasa adalah perkataan gabungan
+            function adalahPerkataanGabungan(frasa) {
+                return perkataanGabungan.includes(frasa.toLowerCase());
+            }
+
+            // Fungsi untuk semak sama ada perkataan adalah kata ganda
+            function adalahKataGanda(kata) {
+                return kataGanda.includes(kata.toLowerCase());
+            }
+
+            // Gabungkan perkataan gabungan
+            let senaraiPerkataan = [];
+            let i = 0;
+            while (i < perkataan.length) {
+                // Semak jika dua perkataan seterusnya adalah perkataan gabungan
+                if (i + 1 < perkataan.length) {
+                    const frasa = `${perkataan[i]} ${perkataan[i + 1]}`;
+                    if (adalahPerkataanGabungan(frasa)) {
+                        senaraiPerkataan.push(frasa);
+                        i += 2; // Langkau dua perkataan
+                        continue;
+                    }
+                }
+                // Semak jika perkataan adalah kata ganda atau perkataan biasa
+                if (adalahKataGanda(perkataan[i])) {
+                    senaraiPerkataan.push(perkataan[i]);
+                } else {
+                    senaraiPerkataan.push(perkataan[i]);
+                }
+                i++;
+            }
+
+            const bilanganPerkataan = senaraiPerkataan.length;
+            document.getElementById('keputusan').textContent = `Jumlah perkataan: ${bilanganPerkataan}`;
         }
     </script>
 </body>
